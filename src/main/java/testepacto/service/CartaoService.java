@@ -1,6 +1,6 @@
 package testepacto.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import testepacto.model.Cartao;
 import testepacto.repository.CartaoRepository;
@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class CartaoService {
 
-    @Autowired
-    private CartaoRepository cartaoRepository;
+    private final CartaoRepository cartaoRepository;
 
     public List<Cartao> findAll() {
         return cartaoRepository.findAll();
@@ -27,14 +27,18 @@ public class CartaoService {
     }
 
     public Cartao update(Long id, Cartao Cartao) {
-//        if (CartaoRepository.existsById(id)) {
-//            Cartao.setId(id);
-//            return cartaoRepository.save(Cartao);
-//        }
+        if (cartaoRepository.existsById(id)) {
+            Cartao.setId(id);
+            return cartaoRepository.save(Cartao);
+        }
         return null;
     }
 
     public void deleteById(Long id) {
         cartaoRepository.deleteById(id);
+    }
+
+    public String ConverteEntidadeCartaoParaApiCielo(Cartao cartao) {
+        return "";
     }
 }

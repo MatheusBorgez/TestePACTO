@@ -1,23 +1,41 @@
 package testepacto.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
+import testepacto.enumerator.StatusVenda;
 import testepacto.enumerator.TipoPagamento;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @Entity
-public abstract class Venda {
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Venda {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private BigDecimal valor;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private TipoPagamento tipoPagamento;
-    private String provedorPagamento;
+
+    @Enumerated(EnumType.STRING)
+    private StatusVenda statusVenda;
+
+    @ManyToMany
+    @JoinTable(
+            name = "venda_produto",
+            joinColumns = @JoinColumn(name = "venda_id"),
+            inverseJoinColumns = @JoinColumn(name = "produto_id")
+    )
+    private List<Produto> produtos;
+
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
+
 }

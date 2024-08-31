@@ -27,8 +27,8 @@ public class VendaService {
 
     private final VendaRepository vendaRepository;
 
-    public List<Venda> findAll() {
-        return vendaRepository.findAll();
+    public List<Venda> findAllByUsuario(Long usuarioId) {
+        return vendaRepository.findAllByUsuarioId(usuarioId);
     }
 
     public Optional<Venda> findById(Long id) {

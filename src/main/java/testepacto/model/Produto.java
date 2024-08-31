@@ -1,9 +1,6 @@
 package testepacto.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -16,8 +13,13 @@ public class Produto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(columnDefinition = "TEXT CHARACTER SET utf8 COLLATE utf8_bin")
     private String descricao;
+
     private String nome;
     private BigDecimal preco;
+
+    @Column(columnDefinition = "TEXT CHARACTER SET utf8 COLLATE utf8_bin")
+    private String urlImagem;
 
 }

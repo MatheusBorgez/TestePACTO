@@ -1,25 +1,28 @@
 package testepacto.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import lombok.AllArgsConstructor;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import testepacto.model.Venda;
+import testepacto.security.AppConfig;
 import testepacto.service.VendaService;
 
 import java.util.List;
 import java.util.Optional;
 
+@AllArgsConstructor
 @RestController
 @RequestMapping("/vendas")
 public class VendaController {
 
-    @Autowired
-    private VendaService vendaService;
+    private final VendaService vendaService;
+    private final AppConfig appConfig;
+    private final RestTemplate restTemplate;
 
-    @GetMapping
-    public ResponseEntity<List<Venda>> getAllCartoes() {
-        List<Venda> vendas = vendaService.findAll();
+    @GetMapping("/{usuarioId}")
+    public ResponseEntity<List<Venda>> getAllVendas(@PathVariable Long usuarioId) {
+        List<Venda> vendas = vendaService.findAllByUsuario(usuarioId);
         return new ResponseEntity<>(vendas, HttpStatus.OK);
     }
 
@@ -32,6 +35,17 @@ public class VendaController {
 
     @PostMapping
     public ResponseEntity<Venda> createVenda(@RequestBody Venda venda) {
+
+//        String url = appConfig.getCieloSandboxApiUrl();
+//
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.set("Authorization", "Bearer token");
+//        headers.set("Content-Type", "application/json");
+//
+//        HttpEntity<Venda> requestEntity = new HttpEntity<>(venda, headers);
+//
+//        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
+
         Venda createdVenda = vendaService.save(venda);
         return new ResponseEntity<>(createdVenda, HttpStatus.CREATED);
     }
