@@ -2,12 +2,15 @@ package testepacto.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.List;
 
 @Data
 @Entity
-public class Usuario {
+public class Usuario implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,13 +18,13 @@ public class Usuario {
 
     private String nome;
 
-    @Column(unique=true, nullable=false, length=14)
+    @Column(unique = true, nullable = false, length = 14)
     private String identidade;
 
-    @Column(nullable=false)
+    @Column(nullable = false)
     private String tipoIdentidade;
 
-    @Column(nullable=false)
+    @Column(nullable = false)
     private String email;
 
     private String senha;
@@ -42,4 +45,18 @@ public class Usuario {
     )
     private List<Cartao> cartoes;
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
+    }
+
+    @Override
+    public String getPassword() {
+        return senha;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
 }
