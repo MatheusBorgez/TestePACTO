@@ -1,0 +1,130 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="formPagamento">
+<section class="bg-light py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-8 col-lg-8 mb-4">
+        <div class="card shadow-0 border">
+          <div class="p-4">
+            <h5 class="card-title mb-3">Finalize seu pedido</h5>
+            <hr class="my-4" />
+            <h5 class="card-title mb-3">Pagamento</h5>
+            <div class="row mb-3">
+              <div class="col-lg-4 mb-3">
+                <div (click)="onFormaPagamentoChanged(TipoPagamentoEnum.CARTAO)" class="form-check h-100 border rounded-3" style="cursor: pointer">
+                  <div class="p-3">
+                    <input
+                      (change)="onFormaPagamentoChanged(TipoPagamentoEnum.CARTAO)"
+                      [checked]="formaPagamentoSelecionada === TipoPagamentoEnum.CARTAO"
+                      class="form-check-input"
+                      id="flexRadioDefault1"
+                      name="formaPagamento"
+                      type="radio"
+                      value="cartao"
+                    />
+                    <label class="form-check-label" for="flexRadioDefault1">
+                      Cartão <br />
+                      <small class="text-muted">Crédito ou débito</small>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-4 mb-3">
+                <div (click)="onFormaPagamentoChanged(TipoPagamentoEnum.PIX)" class="form-check h-100 border rounded-3" style="cursor: pointer">
+                  <div class="p-3">
+                    <input
+                      (change)="onFormaPagamentoChanged(TipoPagamentoEnum.PIX)"
+                      [checked]="formaPagamentoSelecionada === TipoPagamentoEnum.PIX"
+                      class="form-check-input"
+                      id="flexRadioDefault2"
+                      name="formaPagamento"
+                      type="radio"
+                      value="pix"
+                    />
+                    <label class="form-check-label" for="flexRadioDefault2">
+                      Pix <br />
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-4 mb-3">
+                <div (click)="onFormaPagamentoChanged(TipoPagamentoEnum.BOLETO)" class="form-check h-100 border rounded-3" style="cursor: pointer">
+                  <div class="p-3">
+                    <input
+                      (change)="onFormaPagamentoChanged(TipoPagamentoEnum.BOLETO)"
+                      [checked]="formaPagamentoSelecionada === TipoPagamentoEnum.BOLETO"
+                      class="form-check-input"
+                      id="flexRadioDefault3"
+                      name="formaPagamento"
+                      type="radio"
+                      value="boleto"
+                    />
+                    <label class="form-check-label" for="flexRadioDefault3">
+                      Boleto <br />
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div [formGroup]="formPagamento">
+            <div *ngIf="formaPagamentoSelecionada === TipoPagamentoEnum.CARTAO">
+              <app-fields-cartao [formGroup]="formPagamento"></app-fields-cartao>
+            </div>
+            <div *ngIf="formaPagamentoSelecionada === TipoPagamentoEnum.PIX">
+              <div class="row mb-3">
+                  <div class="col-md-8">
+                    <span>Nome completo</span>
+                    <input class="form-control" formControlName="nomeCompleto" type="text" />
+                  </div>
+                  <div class="col-md-4">
+                    <span>CPF/CNPJ</span>
+                    <input class="form-control" formControlName="cpfOuCnpj" mask="CPF_CNPJ" maxlength="18" type="text"/>
+                  </div>
+              </div>
+            </div>
+              <div *ngIf="formaPagamentoSelecionada === TipoPagamentoEnum.BOLETO">
+                <app-fields-boleto [formGroup]="formPagamento"></app-fields-boleto>
+              </div>
+            </div>
+            <div class="float-end">
+              <button class="btn btn-success shadow-0 border" type="submit">Finalizar pedido</button>
+            </div>
+        </div>
+      </div>
+    </div>
+      <div class="col-xl-4 col-lg-4 d-flex justify-content-center justify-content-lg-end">
+        <div class="ms-lg-4 mt-4 mt-lg-0" style="max-width: 320px;">
+          <h6 class="mb-3">Resumo</h6>
+          <div class="d-flex justify-content-between">
+            <p class="mb-2">Valor total:</p>
+            <p class="mb-2">{{ carrinhoService.getCarrinho().valorTotal }}</p>
+          </div>
+          <hr />
+          <h6 class="text-dark my-4">Produtos no carrinho:</h6>
+          <div *ngFor="let produto of carrinhoService.getCarrinho().produtos">
+            <div class="d-flex align-items-center mb-4">
+              <div class="me-3 position-relative">
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill badge-secondary">
+                        1
+                        </span>
+                <img alt="{{ produto.nome }}" class="img-sm rounded border" src="{{ produto.urlImagem }}" style="height: 96px; width: 96px;" />
+              </div>
+              <div class="">
+                <a class="nav-link">
+                  {{ produto.nome }}
+                </a>
+                <div class="price text-muted">Valor: {{ produto.preco }}</div>
+                <button (click)="removerProdutoCarrinho(produto)" class="btn btn-danger btn-sm">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+  </div>
+</section>
+</form>

@@ -1,0 +1,36 @@
+<div [formGroup]="formPagamento" class="row">
+  <div class="col-sm-12 mb-3">
+    <div class="row">
+      <div class="col-md-4">
+        <span>CEP</span>
+        <input class="form-control" formControlName="cep" mask="00000-000" type="text">
+      </div>
+      <div class="col-md-4">
+        <span>Estado</span>
+        <select [(ngModel)]="estadoSelecionado" id="estado">
+          <option *ngFor="let estado of estados" [value]="estado[0]">
+            {{ estado[1] }}
+          </option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <span>Cidade</span>
+        <input class="form-control" type="text">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <span>Bairro</span>
+        <input class="form-control" type="text">
+      </div>
+      <div class="col-md-4">
+        <span>Endereço</span>
+        <input class="form-control" type="text">
+      </div>
+      <div class="col-md-4">
+        <span>Complemento</span>
+        <input class="form-control" type="text">
+      </div>
+    </div>
+  </div>
+</div>

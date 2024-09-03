@@ -23,4 +23,7 @@ public class AppConfig {
     @Value("${testepacto.provedor-boleto}")
     private String provedorBoleto;
 
+    @Value("${testepacto.url-frontend}")
+    private String urlFrontend;
+
 }

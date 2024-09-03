@@ -3,7 +3,6 @@ package testepacto.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import testepacto.enumerator.TipoCartao;
-import org.springframework.validation.annotation.*;
 
 @Data
 @Entity
@@ -22,7 +21,7 @@ public class Cartao {
     @Column(nullable = false, length = 7)
     private String validade;
 
-    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private TipoCartao tipoCartao;
 
     @Column(nullable = false)

@@ -6,6 +6,7 @@ import testepacto.model.Produto;
 import testepacto.repository.ProdutoRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -17,4 +18,7 @@ public class ProdutoService {
         return produtoRepository.findAll();
     }
 
+    public Optional<Produto> findById(long id) {
+        return produtoRepository.findById(id);
+    }
 }

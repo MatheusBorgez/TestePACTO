@@ -20,7 +20,6 @@ public class Venda {
     private BigDecimal valor;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private TipoPagamento tipoPagamento;
 
     @Enumerated(EnumType.STRING)

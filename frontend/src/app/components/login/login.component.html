@@ -1,1 +1,47 @@
-<p>login works!</p>
+<form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
+  <section class="vh-100 gradient-custom">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+          <div class="card bg-dark text-white" style="border-radius: 1rem;">
+            <div class="card-body p-5 text-center">
+              <h2 class="fw-bold mb-5 text-uppercase">Login</h2>
+              <div class="form-outline form-white mb-5">
+                <input
+                  class="form-control form-control-lg"
+                  formControlName="email"
+                  id="typeEmailX"
+                  placeholder="Email"
+                  type="email"
+                />
+                <div *ngIf="loginForm.controls['email'].invalid && !loginForm.controls['email'].untouched">
+                  <small class="text-danger">Email é obrigatório e deve ser um e-mail válido.</small>
+                </div>
+              </div>
+              <div class="form-outline form-white mb-5">
+                <input
+                  class="form-control form-control-lg"
+                  formControlName="password"
+                  id="typePasswordX"
+                  placeholder="Senha"
+                  type="password"
+                />
+                <div *ngIf="loginForm.controls['password'].invalid && !loginForm.controls['password'].untouched">
+                  <small class="text-danger">Senha é obrigatória.</small>
+                </div>
+              </div>
+              <button
+                [disabled]="loginForm.invalid"
+                class="btn btn-outline-light btn-lg px-5"
+                type="submit"
+              >
+                Login
+              </button>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</form>

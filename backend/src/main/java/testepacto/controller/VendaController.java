@@ -1,9 +1,12 @@
 package testepacto.controller;
 
 import lombok.AllArgsConstructor;
-import org.springframework.http.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import testepacto.DTO.VendaCartaoDTO;
+import testepacto.DTO.VendaPixDTO;
 import testepacto.model.Venda;
 import testepacto.security.AppConfig;
 import testepacto.service.VendaService;
@@ -33,8 +36,8 @@ public class VendaController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @PostMapping
-    public ResponseEntity<Venda> createVenda(@RequestBody Venda venda) {
+    @PostMapping("/pix")
+    public ResponseEntity<Venda> createVendaPix(@RequestBody VendaPixDTO venda) {
 
 //        String url = appConfig.getCieloSandboxApiUrl();
 //
@@ -46,13 +49,24 @@ public class VendaController {
 //
 //        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
 
-        Venda createdVenda = vendaService.save(venda);
+        Venda createdVenda = vendaService.gerarVendaPix(venda);
         return new ResponseEntity<>(createdVenda, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteVenda(@PathVariable Long id) {
-        vendaService.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    @PostMapping("/cartao")
+    public ResponseEntity<Venda> createVendaCartao(@RequestBody VendaCartaoDTO venda) {
+
+//        String url = appConfig.getCieloSandboxApiUrl();
+//
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.set("Authorization", "Bearer token");
+//        headers.set("Content-Type", "application/json");
+//
+//        HttpEntity<Venda> requestEntity = new HttpEntity<>(venda, headers);
+//
+//        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
+
+        Venda createdVenda = vendaService.gerarVendaCartao(venda);
+        return new ResponseEntity<>(createdVenda, HttpStatus.CREATED);
     }
 }

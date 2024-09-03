@@ -2,15 +2,13 @@ package testepacto.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import testepacto.enumerator.TipoIdentidade;
 
-import java.util.Collection;
 import java.util.List;
 
 @Data
 @Entity
-public class Usuario implements UserDetails {
+public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,10 +19,10 @@ public class Usuario implements UserDetails {
     @Column(unique = true, nullable = false, length = 14)
     private String identidade;
 
-    @Column(nullable = false)
-    private String tipoIdentidade;
+    @Enumerated(EnumType.STRING)
+    private TipoIdentidade tipoIdentidade;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     private String senha;
@@ -45,18 +43,10 @@ public class Usuario implements UserDetails {
     )
     private List<Cartao> cartoes;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
-    }
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private List<Role> roles;
 
-    @Override
-    public String getPassword() {
-        return senha;
-    }
-
-    @Override
-    public String getUsername() {
-        return email;
-    }
 }

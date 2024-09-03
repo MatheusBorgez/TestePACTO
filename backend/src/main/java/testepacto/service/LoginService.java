@@ -1,23 +1,32 @@
 package testepacto.service;
 
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
-import testepacto.model.Usuario;
-import testepacto.repository.LoginRepository;
+import testepacto.DTO.LoginRequestDTO;
+import testepacto.DTO.LoginResponseDTO;
+import testepacto.model.UserDetailsImpl;
 
 @Service
 @AllArgsConstructor
-public class LoginService implements UserDetailsService {
+public class LoginService {
 
-    private final LoginRepository loginRepository;
+    private final AuthenticationManager authenticationManager;
+    private final JwtTokenService jwtTokenService;
 
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    public LoginResponseDTO authenticateUser(LoginRequestDTO loginRequestDTO) {
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
+                new UsernamePasswordAuthenticationToken(loginRequestDTO.username(), loginRequestDTO.password());
 
-        return loginRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado com o email: " + email));
+        Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+
+        String token = jwtTokenService.gerarToken(userDetails);
+
+        return new LoginResponseDTO(token, userDetails.getNome(), userDetails.getId());
     }
+
 }
