@@ -2,9 +2,9 @@ package testepacto.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import testepacto.DTO.VendaCartaoDTO;
 import testepacto.DTO.VendaPixDTO;
 import testepacto.model.Venda;
+import testepacto.model.VendaCartao;
 import testepacto.repository.VendaBoletoRepository;
 import testepacto.repository.VendaCartaoRepository;
 import testepacto.repository.VendaPixRepository;
@@ -35,12 +35,12 @@ public class VendaService {
 
     public Venda gerarVendaPix(VendaPixDTO venda) {
 
-        return null;//vendaRepository.save(venda);
+        return vendaRepository.save(venda.getVenda());
     }
 
-    public Venda gerarVendaCartao(VendaCartaoDTO venda) {
+    public Venda gerarVendaCartao(VendaCartao venda) {
 
-        return null;//vendaRepository.save(venda);
+        return vendaRepository.save(venda);
     }
 
     public void deleteById(Long id) {

@@ -1,6 +1,7 @@
 package testepacto.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import testepacto.enumerator.StatusVenda;
 import testepacto.enumerator.TipoPagamento;
@@ -11,6 +12,7 @@ import java.util.List;
 @Data
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@AllArgsConstructor
 public class Venda {
 
     @Id
@@ -37,4 +39,7 @@ public class Venda {
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
+    public Venda() {
+        
+    }
 }

@@ -1,5 +1,5 @@
 export enum TipoPagamentoEnum {
-  'CARTAO' = 'Cartão',
+  'CARTAO' = 'Cartao',
   'PIX' = 'Pix',
   'BOLETO' = 'Boleto'
 }

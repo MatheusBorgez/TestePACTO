@@ -1,9 +1,9 @@
 package testepacto.enumerator;
 
 public enum StatusVenda {
-    PENDENTE,
-    APROVADA,
-    CANCELADA,
-    FALHA
+    Pendente,
+    Aprovada,
+    Cancelada,
+    Falha
 
 }
