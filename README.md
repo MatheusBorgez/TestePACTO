@@ -25,3 +25,46 @@ Considerações finais:
 Devido ao prazo apertado não foi possível atender a todos os pontos solicitados.
 
 Qualquer dúvida sobre o projeto basta entrar em contato comigo via whatsapp ***62 984190459***
+
+ng --version
+npm install -g @angular/cli
+ng new nome-do-projeto
+cd nome-do-projeto
+ng serve
+
+ng g c nome-do-componente
+ng g s nome-do-servico
+ng g cl models/nome-do-model --type=model
+ng g m nome-do-modulo
+ng g d nome-da-diretiva
+ng g p nome-do-pipe
+ng g g nome-do-guard
+
+
+src/
+│
+├── app/
+│   ├── components/
+│   │   └── nome-do-componente/
+│   │       ├── nome-do-componente.component.ts
+│   │       ├── nome-do-componente.component.html
+│   │       ├── nome-do-componente.component.scss
+│   │       └── nome-do-componente.component.spec.ts
+│   │
+│   ├── models/
+│   │   └── nome-do-model.model.ts
+│   │
+│   ├── services/
+│   │   └── nome-do-servico.service.ts
+│   │
+│   ├── guards/
+│   │   └── nome-do-guard.guard.ts
+│   │
+│   ├── nome-do-modulo/
+│   │   └── nome-do-modulo.module.ts
+│   │
+│   └── app.module.ts
+│
+└── assets/
+
+
